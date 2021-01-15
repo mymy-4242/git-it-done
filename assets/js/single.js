@@ -1,4 +1,10 @@
+var issuesContainerEl = document.querySelector("#issues-container");
+
 var displayIssues = function(issues) {
+    if (issues.length === 0) {
+        issuesContainerEl.textContent = "This repo has no open issues!";
+        return;
+    }
     for(var i=0; i < issues.length; i++) {
         //create a link element to take users to the issue on github
         var issueEl = document.createElement("a");
@@ -25,6 +31,8 @@ var displayIssues = function(issues) {
 
         //append to container
         issueEl.appendChild(typeEl);
+
+        issuesContainerEl.appendChild(issueEl);
     }
 };
 
@@ -35,7 +43,7 @@ var getRepoIssues = function(repo) {
         if(Response.ok) {
             Response.json().then(function(data) {
                 //pass response data to dom function
-                displayIssues();
+                displayIssues(data);
             });
         }
         else {
@@ -46,4 +54,4 @@ var getRepoIssues = function(repo) {
 
 
 
-getRepoIssues("facebook/react");
+getRepoIssues("mymy-4242/run-buddy");
